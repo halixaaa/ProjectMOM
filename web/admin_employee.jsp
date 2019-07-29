@@ -13,26 +13,18 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         
-        <!-- CSS Data tables -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
         <!--End of CSS Data tables-->
-                <!--CSS and JS Modal-->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-        <!--End of CSS and JS Modal-->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-        <!--CSS and JS SweetAlert-->
+        
+                <!--CSS and JS SweetAlert-->
         <script src="sweetalert2.min.js"></script>
         <link rel="stylesheet" href="sweetalert2.min.css">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
         <script src="sweetalert2.all.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+        <!--End of CSS and JS SweetAlert-->
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <style> 
     
@@ -104,10 +96,10 @@
     <body>
         
         <div class="sidenav">
-  <a href="#">Employee</a>
-  <a href="#">Customer</a>
-  <a href="#">Role</a>
-  <a href="#">Status</a>
+  <a href="admin_employee.jsp">Employee</a>
+  <a href="admin_customer.jsp">Customer</a>
+  <a href="admin_role.jsp">Role</a>
+  <a href="admin_status.jsp">Status</a>
 <!--  <button class="dropdown-btn">Dropdown 
     <i class="fa fa-caret-down"></i>
   </button>
@@ -202,7 +194,7 @@ for (i = 0; i < dropdown.length; i++) {
                 </div>
             </div>
         </div>
-        <!-- /#page-content-wrapper -->
+   </div>
 
         
         
@@ -242,7 +234,7 @@ for (i = 0; i < dropdown.length; i++) {
             </div>
                                 
             <!--End of Modal Insert-->
-    </div>
+    
                 
      
                 <style type="text/css">

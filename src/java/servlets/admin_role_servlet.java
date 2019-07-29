@@ -23,11 +23,10 @@ import tools.HibernateUtil;
  *
  * @author Bella
  */
-@WebServlet(name = "admin_employee_servlet", urlPatterns = {"/EmployeeServlet"})
-public class admin_employee_servlet extends HttpServlet {
+@WebServlet(name = "admin_role_servlet", urlPatterns = {"/RoleServlet"})
+public class admin_role_servlet extends HttpServlet {
 
-    IGenericDAO<Employee> employeeDAO = new GenericDAO(Employee.class, HibernateUtil.getSessionFactory());
-
+        IGenericDAO<Role> roleDAO = new GenericDAO(Role.class, HibernateUtil.getSessionFactory());
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,12 +38,12 @@ public class admin_employee_servlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            request.getSession().setAttribute("listEmployee", employeeDAO.getAll());
+            request.getSession().setAttribute("listRole", roleDAO.getAll());
             
-            response.sendRedirect("admin_employee.jsp");
+            response.sendRedirect("admin_role.jsp");
         }
     }
 
@@ -63,9 +62,9 @@ public class admin_employee_servlet extends HttpServlet {
         String id = request.getParameter("id")+"";
         String action = request.getParameter("action")+"";
         if(action.equals("delete")){
-            employeeDAO.delete(new Employee(new BigDecimal(id)));
+            roleDAO.delete(new Role(new BigDecimal(id)));
         }else if(action.equals("update")){
-            request.getSession().setAttribute("employee", employeeDAO.getById(new BigDecimal(id)));
+            request.getSession().setAttribute("role", roleDAO.getById(new BigDecimal(id)));
         }
         processRequest(request, response);
     }
@@ -81,17 +80,11 @@ public class admin_employee_servlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
         String id = request.getParameter("id");
         String name = request.getParameter("name");
-        String role = request.getParameter("role");
-        String phone = request.getParameter("phone");
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
         BigDecimal bdId = new BigDecimal(id);
-        Role newRole = new Role(role);
-        Employee employee = new Employee(bdId, name, newRole, phone, email, password);
-        employeeDAO.insertUpdate(employee);
+        Role role = new Role(bdId, name);
+        roleDAO.insertUpdate(role);
         processRequest(request, response);
     }
 
