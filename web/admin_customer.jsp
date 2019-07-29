@@ -216,7 +216,6 @@ for (i = 0; i < dropdown.length; i++) {
                                 <label><b>Email</b></label>
                                 <input class="form-control" type="text" name="email" value="<%=(customer != null) ? customer.getEmail(): ""%>" />
                                 <br>
-                                
                                 <input  type="submit" value="Save" class="btn btn-success" id="insert">
                             </form>
                         </div>
