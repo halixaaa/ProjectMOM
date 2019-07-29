@@ -20,7 +20,7 @@
         <script src="sweetalert2.all.min.js"></script>
         <!--End of CSS and JS SweetAlert-->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-        
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -67,8 +67,8 @@ h1 {
 }
 
 .right-half {
-    padding:70px 50px;
-  background-color: #b6701e;
+    padding:100px 50px;
+  background-color: #FBB117;
   position: absolute;
   right: 0px;
   width: 30%;
@@ -151,15 +151,14 @@ h1 {
     <div class="login-form">
                <form>
                   <div class="form-group">
-                     <label>User Name</label>
-                     <input type="text" class="form-control" placeholder="User Name">
+                     <label>Username</label>
+                     <input type="text" class="form-control" placeholder="Username">
                   </div>
                   <div class="form-group">
                      <label>Password</label>
                      <input type="password" class="form-control" placeholder="Password">
                   </div>
-                  <button type="submit" class="btn btn-black">Login</button>
-                  <button type="submit" class="btn btn-secondary">Register</button>
+                  <button type="submit" class="w3-button w3-black">Login</button>
                </form>
     </div>
   </div>

@@ -3,20 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package models;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -26,17 +28,16 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Bella
  */
 @Entity
-@Table(name = "CUSTOMER")
+@Table(name = "EMPLOYEE")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Customer.findAll", query = "SELECT c FROM Customer c")
-    , @NamedQuery(name = "Customer.findById", query = "SELECT c FROM Customer c WHERE c.id = :id")
-    , @NamedQuery(name = "Customer.findByName", query = "SELECT c FROM Customer c WHERE c.name = :name")
-    , @NamedQuery(name = "Customer.findByPic", query = "SELECT c FROM Customer c WHERE c.pic = :pic")
-    , @NamedQuery(name = "Customer.findByAddress", query = "SELECT c FROM Customer c WHERE c.address = :address")
-    , @NamedQuery(name = "Customer.findByPhone", query = "SELECT c FROM Customer c WHERE c.phone = :phone")
-    , @NamedQuery(name = "Customer.findByEmail", query = "SELECT c FROM Customer c WHERE c.email = :email")})
-public class Customer implements Serializable {
+    @NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee e")
+    , @NamedQuery(name = "Employee.findById", query = "SELECT e FROM Employee e WHERE e.id = :id")
+    , @NamedQuery(name = "Employee.findByName", query = "SELECT e FROM Employee e WHERE e.name = :name")
+    , @NamedQuery(name = "Employee.findByPhone", query = "SELECT e FROM Employee e WHERE e.phone = :phone")
+    , @NamedQuery(name = "Employee.findByEmail", query = "SELECT e FROM Employee e WHERE e.email = :email")
+    , @NamedQuery(name = "Employee.findByPassword", query = "SELECT e FROM Employee e WHERE e.password = :password")})
+public class Employee implements Serializable {
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -44,30 +45,42 @@ public class Customer implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID")
     private BigDecimal id;
-    @Basic(optional = false)
     @Column(name = "NAME")
     private String name;
-    @Column(name = "PIC")
-    private String pic;
-    @Column(name = "ADDRESS")
-    private String address;
     @Column(name = "PHONE")
     private String phone;
     @Column(name = "EMAIL")
     private String email;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "attendid", fetch = FetchType.LAZY)
-    private List<Attendees> attendeesList;
+    @Column(name = "PASSWORD")
+    private String password;
+    @JoinTable(name = "DETAILMEETING", joinColumns = {
+        @JoinColumn(name = "EMPLOYEE", referencedColumnName = "ID")}, inverseJoinColumns = {
+        @JoinColumn(name = "MEETING", referencedColumnName = "ID")})
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Meeting> meetingList;
+    @JoinColumn(name = "ROLE", referencedColumnName = "ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Role role;
 
-    public Customer() {
+    public Employee() {
     }
 
-    public Customer(BigDecimal id) {
+    public Employee(BigDecimal id) {
         this.id = id;
     }
 
-    public Customer(BigDecimal id, String name) {
+    public Employee(BigDecimal id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public Employee(BigDecimal id, String name, Role role, String phone, String email, String password) {
+        this.id=id;
+        this.name=name;
+        this.role=role;
+        this.phone=phone;
+        this.email=email;
+        this.password=password;
     }
 
     public BigDecimal getId() {
@@ -86,22 +99,6 @@ public class Customer implements Serializable {
         this.name = name;
     }
 
-    public String getPic() {
-        return pic;
-    }
-
-    public void setPic(String pic) {
-        this.pic = pic;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public String getPhone() {
         return phone;
     }
@@ -118,13 +115,29 @@ public class Customer implements Serializable {
         this.email = email;
     }
 
-    @XmlTransient
-    public List<Attendees> getAttendeesList() {
-        return attendeesList;
+    public String getPassword() {
+        return password;
     }
 
-    public void setAttendeesList(List<Attendees> attendeesList) {
-        this.attendeesList = attendeesList;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @XmlTransient
+    public List<Meeting> getMeetingList() {
+        return meetingList;
+    }
+
+    public void setMeetingList(List<Meeting> meetingList) {
+        this.meetingList = meetingList;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Override
@@ -137,10 +150,10 @@ public class Customer implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Customer)) {
+        if (!(object instanceof Employee)) {
             return false;
         }
-        Customer other = (Customer) object;
+        Employee other = (Employee) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -149,7 +162,7 @@ public class Customer implements Serializable {
 
     @Override
     public String toString() {
-        return "model.Customer[ id=" + id + " ]";
+        return "models.Employee[ id=" + id + " ]";
     }
     
 }

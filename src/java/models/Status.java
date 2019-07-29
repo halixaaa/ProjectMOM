@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package models;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -49,6 +49,15 @@ public class Status implements Serializable {
 
     public Status(BigDecimal id) {
         this.id = id;
+    }
+
+    public Status(String status) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Status(BigDecimal id, String name) {
+        this.id=id;
+        this.name=name;
     }
 
     public BigDecimal getId() {
@@ -98,7 +107,7 @@ public class Status implements Serializable {
 
     @Override
     public String toString() {
-        return "model.Status[ id=" + id + " ]";
+        return "models.Status[ id=" + id + " ]";
     }
     
 }

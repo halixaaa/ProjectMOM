@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package models;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -40,7 +40,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Meeting.findByProject", query = "SELECT m FROM Meeting m WHERE m.project = :project")
     , @NamedQuery(name = "Meeting.findByDates", query = "SELECT m FROM Meeting m WHERE m.dates = :dates")
     , @NamedQuery(name = "Meeting.findByTime", query = "SELECT m FROM Meeting m WHERE m.time = :time")
-    , @NamedQuery(name = "Meeting.findByChairedby", query = "SELECT m FROM Meeting m WHERE m.chairedby = :chairedby")})
+    , @NamedQuery(name = "Meeting.findByChairedby", query = "SELECT m FROM Meeting m WHERE m.chairedby = :chairedby")
+    , @NamedQuery(name = "Meeting.findByType", query = "SELECT m FROM Meeting m WHERE m.type = :type")})
 public class Meeting implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -61,11 +62,13 @@ public class Meeting implements Serializable {
     private String time;
     @Column(name = "CHAIREDBY")
     private String chairedby;
+    @Column(name = "TYPE")
+    private String type;
     @ManyToMany(mappedBy = "meetingList", fetch = FetchType.LAZY)
     private List<Employee> employeeList;
-    @JoinColumn(name = "ATTENDEES", referencedColumnName = "ID")
+    @JoinColumn(name = "CUSTOMER", referencedColumnName = "ID")
     @ManyToOne(fetch = FetchType.LAZY)
-    private Attendees attendees;
+    private Customer customer;
     @OneToMany(mappedBy = "meeting", fetch = FetchType.LAZY)
     private List<Mom> momList;
 
@@ -79,6 +82,21 @@ public class Meeting implements Serializable {
     public Meeting(BigDecimal id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public Meeting(BigDecimal id, String name, String project, Date dates, String time, String chairedby, String type, Customer customer) {
+        this.id=id;
+        this.name=name;
+        this.project=project;
+        this.dates=dates;
+        this.time=time;
+        this.chairedby=chairedby;
+        this.type=type;
+        this.customer=customer;
+    }
+
+    public Meeting(String meeting) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public BigDecimal getId() {
@@ -129,6 +147,14 @@ public class Meeting implements Serializable {
         this.chairedby = chairedby;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @XmlTransient
     public List<Employee> getEmployeeList() {
         return employeeList;
@@ -138,12 +164,12 @@ public class Meeting implements Serializable {
         this.employeeList = employeeList;
     }
 
-    public Attendees getAttendees() {
-        return attendees;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setAttendees(Attendees attendees) {
-        this.attendees = attendees;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     @XmlTransient
@@ -177,7 +203,7 @@ public class Meeting implements Serializable {
 
     @Override
     public String toString() {
-        return "model.Meeting[ id=" + id + " ]";
+        return "models.Meeting[ id=" + id + " ]";
     }
     
 }
